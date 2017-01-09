@@ -1,0 +1,10 @@
+*.DS_Store
+*.iml
+.gradle
+/android_example/local.properties
+/android_example/.idea/workspace.xml
+/android_example/.idea/libraries
+.DS_Store
+/android_example/build
+/android_example/captures
+.externalNativeBuild
