@@ -92,7 +92,7 @@ compile('com.indoorway.android:common:{latest.version}')
 compile('com.indoorway.android:map:{latest.version}')
 
 // optional if you don't want to use indoor positioning
-compile('com.indoorway.android:location:{latest.version}')	
+compile('com.indoorway.android:location:{latest.version}')  
 ```
 
 [Maven](#):
@@ -203,7 +203,7 @@ indoorwayMapView
         }
     })
     // perform map loading using building UUID and map UUID
-    .loadMap("WND7SHw7zkE", "Q5Q6QhzIvcA");
+    .loadMap("<building UUID>", "<map UUID>");
 
 ```
 
@@ -215,11 +215,11 @@ To customize map view's displaying attributes simply call setters on object retu
 IndoorwayMapSdk mapSdk = IndoorwayMapSdk.getInstance();
 
 mapSdk.getConfig()
-	// eg. custom background color for different room types
-	.setCustomBackgroundColor("inaccessible", Color.parseColor("#23252C"))
-	.setCustomBackgroundColor("elevator", Color.parseColor("#23252C"))
-	// custom map outdoor background
-	.setMapOutdoorBackgroundColor(Color.parseColor("#282a30"));
+    // eg. custom background color for different room types
+    .setCustomBackgroundColor("inaccessible", Color.parseColor("#23252C"))
+    .setCustomBackgroundColor("elevator", Color.parseColor("#23252C"))
+    // custom map outdoor background
+    .setMapOutdoorBackgroundColor(Color.parseColor("#282a30"));
 ```
 
 There are more properties which can be set. Refer to full documentation for complete attributes list and their default values.
@@ -308,21 +308,21 @@ If you want to control which objects can be selected and receive callbacks, set 
 ```java
 indoorwayMapView.getSelectionControl().setOnObjectSelectedListener(new OnObjectSelectedListener() {
 
-	@Override
-	public boolean canObjectBeSelected(IndoorwayObjectParameters objectParameters) {
-		// return true if object with given parameters can be selected
-	    return !"inaccessible".equals(objectParameters.getType());
-	}
+    @Override
+    public boolean canObjectBeSelected(IndoorwayObjectParameters objectParameters) {
+        // return true if object with given parameters can be selected
+        return !"inaccessible".equals(objectParameters.getType());
+    }
 
-	@Override
-	public void onObjectSelected(IndoorwayObjectParameters objectParameters) {
-		// called on object selection, check objectParameters for details
-	}
+    @Override
+    public void onObjectSelected(IndoorwayObjectParameters objectParameters) {
+        // called on object selection, check objectParameters for details
+    }
 
-	@Override
-	public void onSelectionCleared() {
-		// called when no object is selected
-	}
+    @Override
+    public void onSelectionCleared() {
+        // called when no object is selected
+    }
 
 });
 ```
@@ -331,15 +331,15 @@ Indoor objects can be also selected programmatically by:
 
 - identifier:
 
-	```java
-	indoorwayMapView.getSelectionControl().selectObject("<object identifier>");
-	```
+    ```java
+    indoorwayMapView.getSelectionControl().selectObject("<object identifier>");
+    ```
 - latitude and longitude:
 
-	```java
-	// object containing given point will be selected
-	indoorwayMapView.getSelectionControl().selectObject(latitude, longitude);
-	```
+    ```java
+    // object containing given point will be selected
+    indoorwayMapView.getSelectionControl().selectObject(latitude, longitude);
+    ```
 
 If you want to clear selection, call:
 
@@ -353,27 +353,27 @@ There are several ways you can show navigation path in map view:
 
 - navigate from current user's location to specific destination object (see [indoor positioning](#indoor-positioning) section for more information and example with `currentPosition` field):
 
-	```java
-	indoorwayMapView.getNavigationControl().start(currentPosition, "<object identifier>");
-	```
+    ```java
+    indoorwayMapView.getNavigationControl().start(currentPosition, "<object identifier>");
+    ```
 
 - navigate from current user's location to specific position (latitude, longitude):
 
-	```java
-	indoorwayMapView.getNavigationControl().start(currentPosition, destinationLatitude, destinationLongitude);
-	```
+    ```java
+    indoorwayMapView.getNavigationControl().start(currentPosition, destinationLatitude, destinationLongitude);
+    ```
 
 - navigate from given latitude, longitude to specific destination object:
 
-	```java
-	indoorwayMapView.getNavigationControl().start(startLatitude, startLongitude, "<object identifier>");
-	```
+    ```java
+    indoorwayMapView.getNavigationControl().start(startLatitude, startLongitude, "<object identifier>");
+    ```
 
 - navigate between two positions defined by latitude and longitude:
-	
-	```java
-	indoorwayMapView.getNavigationControl().start(startLatitude, startLongitude, destinationLatitude, destinationLongitude);
-	```
+    
+    ```java
+    indoorwayMapView.getNavigationControl().start(startLatitude, startLongitude, destinationLatitude, destinationLongitude);
+    ```
 
 To stop navigation call:
 
@@ -526,29 +526,29 @@ protected void onPause() {
 
 ```java
 serviceConnection
-	.setOnPositionChangedListener(new OnPositionChangedListener() {
-	    @Override
-	    public void onPositionChanged(IndoorwayPosition position) {
-	        // store last position as a field
-	        currentPosition = position;
+    .setOnPositionChangedListener(new OnPositionChangedListener() {
+        @Override
+        public void onPositionChanged(IndoorwayPosition position) {
+            // store last position as a field
+            currentPosition = position;
 
-	        // react for position changes...
+            // react for position changes...
 
-	        // If you are using map view, you can pass position.
-	        // Second argument indicates if you want to auto reload map on position change
-	        // for eg. after going to different building level.
-	        indoorwayMapView.getPositionControl().setPosition(position, true);
-	    }
-	})
-	.setOnHeadingChangedListener(new OnHeadingChangedListener() {
-	    @Override
-	    public void onHeadingChanged(float angle) {
-	        // react for heading changes...
-	        
-	        // If you are using map view, you can pass heading.
-	        indoorwayMapView.getPositionControl().setHeading(angle);
-	    }
-	});
+            // If you are using map view, you can pass position.
+            // Second argument indicates if you want to auto reload map on position change
+            // for eg. after going to different building level.
+            indoorwayMapView.getPositionControl().setPosition(position, true);
+        }
+    })
+    .setOnHeadingChangedListener(new OnHeadingChangedListener() {
+        @Override
+        public void onHeadingChanged(float angle) {
+            // react for heading changes...
+            
+            // If you are using map view, you can pass heading.
+            indoorwayMapView.getPositionControl().setHeading(angle);
+        }
+    });
 ```
 
 #### 3. Start positioning service
@@ -558,9 +558,9 @@ Service connection wil throw an exception during `start` if some conditions are 
 - BLE is not supported on device,
 - bluetooth is disabled,
 - one of following permissions is missing:
-	+ `Manifest.permission.ACCESS_FINE_LOCATION`,
-	+ `Manifest.permission.BLUETOOTH`,
-	+ `Manifest.permission.BLUETOOTH_ADMIN`,
+    + `Manifest.permission.ACCESS_FINE_LOCATION`,
+    + `Manifest.permission.BLUETOOTH`,
+    + `Manifest.permission.BLUETOOTH_ADMIN`,
 - location provider is disabled.
 
 Application must ask user for specified permissions and settings change if necessary. To properly handle all of these wrap `serviceConnection.start(this)` in try-catch block. When permission is granted or user changes required setting, call `start` again.
@@ -591,11 +591,11 @@ If you want to track user position for analytic purposes, call:
 
 ```java
 Visitor visitor = new Visitor()
-		// optional: set more detailed informations if you have one
-		.setGroupUuid("<users group identifier>")	// user group
-        .setName("John Smith")						// user name
-        .setAge(60)									// user age
-        .setSex(Visitor.Sex.MALE);					// user gender
+        // optional: set more detailed informations if you have one
+        .setGroupUuid("<users group identifier>")   // user group
+        .setName("John Smith")                      // user name
+        .setAge(60)                                 // user age
+        .setSex(Visitor.Sex.MALE);                  // user gender
 
 // You can call setupVisitor at any time if you have serviceConnection reference.
 // Tracking will be set up automatically as soon as position is found.
