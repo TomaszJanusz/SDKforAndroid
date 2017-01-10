@@ -1,11 +1,7 @@
 apply plugin: 'com.android.application'
 
-//repositories {
-//    maven { url 'https://indoorway.com/sdk/android/repo/maven/' }
-//}
-
 repositories {
-    add mavenLocal()
+    maven { url 'https://indoorway.com/sdk/android/repo/maven/' }
 }
 
 android {
