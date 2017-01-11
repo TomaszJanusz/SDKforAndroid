@@ -438,7 +438,7 @@ mapSdk.getBuildingsApi()
         .getMapObjects("<building UUID>", "<map UUID>")
         .setOnCompletedListener(new GenericListenerArg1<List<IndoorwayObjectParameters>>() {
             @Override
-            public void onAction(List<IndoorwayObjectParameters> indoorwayObjectParameterses) {
+            public void onAction(List<IndoorwayObjectParameters> indoorwayObjectParametersList) {
                 // handle map objects
             }
         })
@@ -451,6 +451,20 @@ mapSdk.getBuildingsApi()
         .execute();
 ```
 
+If you want to filter objects by their tags, you can use `getTags()` which returns `Set<String>`:
+
+```java
+ArrayList<IndoorwayObjectParameters> result = new ArrayList<>();
+for(IndoorwayObjectParameters objectParameters : indoorwayObjectParametersList) {
+    Set<String> tags = objectParameters.getTags();
+    if(tags.contains("sample-tag")) {
+        result.add(objectParameters);
+    }
+}
+
+// process filtered objects
+```
+
 #### Getting list of available images
 
 ```java
@@ -458,7 +472,7 @@ mapSdk.getLogosApi()
         .getLogotypes()
         .setOnCompletedListener(new GenericListenerArg1<List<IndoorwayIconParameters>>() {
             @Override
-            public void onAction(List<IndoorwayIconParameters> indoorwayIconParameterses) {
+            public void onAction(List<IndoorwayIconParameters> indoorwayIconParametersList) {
                 // handle available logo images
             }
         })
@@ -478,8 +492,28 @@ mapSdk.getPoisApi()
         .getPois()
         .setOnCompletedListener(new GenericListenerArg1<List<IndoorwayIconParameters>>() {
             @Override
-            public void onAction(List<IndoorwayIconParameters> indoorwayIconParameterses) {
+            public void onAction(List<IndoorwayIconParameters> indoorwayIconParametersList) {
                 // handle poi types (eg. for legend)
+            }
+        })
+        .setOnFailedListener(new GenericListenerArg1<IndoorwayTask.ProcessingException>() {
+            @Override
+            public void onAction(IndoorwayTask.ProcessingException e) {
+                // handle error, original exception is given on e.getCause()
+            }
+        })
+        .execute();
+```
+
+#### Getting list of available tags
+
+```java
+mapSdk.getTagsApi()
+        .getTags()
+        .setOnCompletedListener(new GenericListenerArg1<List<String>>() {
+            @Override
+            public void onAction(List<String> strings) {
+                // handle list of available tags
             }
         })
         .setOnFailedListener(new GenericListenerArg1<IndoorwayTask.ProcessingException>() {
