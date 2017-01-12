@@ -327,6 +327,8 @@ indoorwayMapView.getSelectionControl().setOnObjectSelectedListener(new OnObjectS
 });
 ```
 
+> Attention: selection won't work if `OnObjectSelectedListener` was not set.
+
 Indoor objects can be also selected programmatically by:
 
 - identifier:
@@ -345,6 +347,19 @@ If you want to clear selection, call:
 
 ```java
 indoorwayMapView.getSelectionControl().deselect();
+```
+
+### Handling touch events
+
+To receive touch events for map and receive `Coordinates` of "touched" position use `OnTouchListener`:
+
+```java
+indoorwayMapView.getTouchControl().setOnTouchListener(new OnTouchListener() {
+    @Override
+    public void onTouch(Coordinates coordinates) {
+        // handle on touch event
+    }
+});
 ```
 
 ### Navigation
