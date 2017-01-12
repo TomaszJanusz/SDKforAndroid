@@ -176,7 +176,6 @@ Firstly, define `com.indoorway.android.map.sdk.view.IndoorwayMapView` inside you
 <com.indoorway.android.map.sdk.view.IndoorwayMapView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_above="@+id/bottomLayout"
     android:layout_alignParentTop="true"
     android:id="@+id/mapView" />
 ```
@@ -351,7 +350,7 @@ indoorwayMapView.getSelectionControl().deselect();
 
 ### Handling touch events
 
-To receive touch events for map and receive `Coordinates` of "touched" position use `OnTouchListener`:
+To receive `Coordinates` of "touched" position use `OnTouchListener`:
 
 ```java
 indoorwayMapView.getTouchControl().setOnTouchListener(new OnTouchListener() {
