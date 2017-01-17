@@ -8,3 +8,4 @@
 /android_example/build
 /android_example/captures
 .externalNativeBuild
+/android_example/.idea/

@@ -650,6 +650,55 @@ Visitor visitor = new Visitor()
 serviceConnection.setupVisitor(visitor);
 ```
 
+### Ranges
+
+In case you want receive callbacks when user enters or leaves , you can use `OnRangeEnterExitListener`.
+
+```java
+@Override
+protected void onResume() {
+    // ...
+
+    Range sampleRange = new Range(
+        "<range-id>",  // identifier
+        new Coordinates(51.0, 20.0), // coordinates
+        3f          // radius [meters]
+    );
+
+    serviceConnection
+            // add multiple ranges
+            .addRange(sampleRange)
+            // receive callbacks
+            .setOnRangeEnterExitListener(new OnRangeEnterExitListener() {
+                @Override
+                public void onEnter(Range range) {
+                    // called when user entries range
+                    if(range.getId().equals("<range-id>")) {
+                        new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("onEnter called")
+                            .setMessage("Welcome!")
+                            .show();
+                    }
+                }
+
+                @Override
+                public void onExit(Range range) {
+                    // called when user exits range
+                    if(range.getId().equals("<range-id>")) {
+                        new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("onExit called")
+                            .setMessage("Goodbye!")
+                            .show();
+                    }
+                }
+            });
+
+    // ...
+}
+```
+
+> You can add as many ranges as you want. Please note their identifiers need to be unique.
+
 ## Documentation
 
 Full documentation will be available soon.  
