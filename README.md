@@ -235,14 +235,31 @@ There are more properties which can be set. Refer to full documentation for comp
 >         }
 >     });
 > ```
+>
+> Please note that layers list is cleared after loading new map.
+
+In order to add your own marker on a map, you have to create new `MarkersLayer`.
+
+Firstly, define it as a field: 
+```
+MarkersLayer myLayer;
+```
+
+When map loads, obtain it's reference:
+```
+myLayer = indoorwayMapView.getMarkerControl().addLayer(priority);
+```
+
+`priority` is a float value which determines layers order. They are drawn from the lowest priority value to the highest. Standard map layers are registered with priorities from _0.0_ to _10.0_.
+`addLayer` may be called multiple times to get multiple, independent layers.
+
 
 #### Text
 
-To add custom text marker on a map, call:
+To add custom label on a map, call:
 
 ```java
-indoorwayMapView.getMarkerControl()
-    .add(
+myLayer.add(
         new DrawableText(
             "<marker-id>",
             new Coordinates(latitude, longitude),
@@ -257,12 +274,12 @@ Identifiers of markers (like `<marker-id>`) added through `add` should be unique
 At any time, marker can be removed by:
 
 ```java
-indoorwayMapView.getMarkerControl().remove("<marker-id>");
+myLayer.remove("<marker-id>");
 ```
 
 #### Icons
 
-Adding icons to map requires a little more work. Firstly, you need to register a "texture". Texture is a grid of images grouped into a single image (know also as _sprite sheet_).
+Adding icons to map requires a little more work. Firstly, you need to register a "texture". Texture is a grid of images grouped into a single image (known also as a _sprite sheet_).
 
 Secondly, you can add `DrawableIcon` using _registered texture_ identifier.
 
@@ -272,33 +289,53 @@ See an example below:
 // load images grid as a bitmap
 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sample_texture);
 
-indoorwayMapView.getMarkerControl()
-                // register texture with "<texture-id>" identifier
-                .registerTexture(new DrawableTexture("<texture-id>", bitmap))
-                // first icon
-                .add(
-                    new DrawableIcon(
-                        "<icon1-id>",   // icon identifier
-                        "<texture-id>", // texture identifier
-                        new Coordinates(latitude1, longitude1),
-                        textureCoordsForIcon, 
-                        iconXSize1,  // eg. 2f
-                        iconYSize1   // eg. 2f
-                    )
-                )
-                // second icon
-                .add(
-                    new DrawableIcon(
-                        "<icon2-id>",    // icon identifier
-                        "<texture-id>", // texture identifier
-                        new Coordinates(latitude2, longitude2),
-                        textureCoordsForIcon, 
-                        iconXSize2,  // eg. 2f
-                        iconYSize2   // eg. 2f
-                    )
-                );
-                // etc...
+myLayer
+    // register texture with "<texture-id>" identifier
+    .registerTexture(new DrawableTexture("<texture-id>", bitmap))
+    // first icon
+    .add(
+        new DrawableIcon(
+            "<icon1-id>",   // icon identifier
+            "<texture-id>", // texture identifier
+            new Coordinates(latitude1, longitude1),
+            textureCoordsForIcon, 
+            iconXSize1,  // eg. 2f
+            iconYSize1   // eg. 2f
+        )
+    )
+    // second icon
+    .add(
+        new DrawableIcon(
+            "<icon2-id>",    // icon identifier
+            "<texture-id>", // texture identifier
+            new Coordinates(latitude2, longitude2),
+            textureCoordsForIcon, 
+            iconXSize2,  // eg. 2f
+            iconYSize2   // eg. 2f
+        )
+    );
+    // etc...
 ```
+
+#### Figures
+
+Figures can be added using it's coordinates. See an example below:
+
+```
+Coordinates coordinates = new Coordinates(52.0, 21.0);
+myLayer.add(new DrawableCircle(
+    "<unique-figure-id>",             
+    radius,         // radius in meters, eg. 0.4f
+    color,          // circle background color, eg. Color.RED
+    outlineColor,   // color of outline, eg. Color.BLUE
+    outlineWidth,   // width of outline in meters, eg. 0.1f
+    coordinates     // coordinates of circle center point
+));
+```
+
+> Tip: If you don't want to draw any outline, just use Color.TRANSPARENT and/or set `outlineWidth` to 0f.
+
+See full documentation for another types of figures. 
 
 ### Indoor objects selection
 
