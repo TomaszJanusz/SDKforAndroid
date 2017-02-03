@@ -190,10 +190,16 @@ indoorwayMapView
     // optional: assign callback for map loaded event
     .setOnMapLoadCompletedListener(new OnMapLoadedListener() {
         @Override
-        public void onAction(BuildingAndMapId buildingAndMapId) {
+        public void onAction(IndoorwayMap indoorwayMap) {
             // called on every new map load success
+
+            // access to paths graph
+            paths = indoorwayMap.getPaths(); 
+
+            // access to map objects
+            mapObjects = indoorwayMap.getObjects(); 
         }
-    })
+    })    
     // optional: assign callback for map loading failure
     .setOnMapLoadFailedListener(new GenericListenerArg0() {
         @Override
@@ -484,12 +490,14 @@ mapSdk.getBuildingsApi()
 
 #### Getting map objects
 
+When objects only for current map are needed, `OnMapLoadCompletedListener` on `IndoorwayMapView` object can be used. If you want to fetch map elements _without_ loading map, call:
+
 ```java
 mapSdk.getBuildingsApi()
         .getMapObjects("<building UUID>", "<map UUID>")
-        .setOnCompletedListener(new GenericListenerArg1<List<IndoorwayObjectParameters>>() {
+        .setOnCompletedListener(new GenericListenerArg1<IndoorwayMap>() {
             @Override
-            public void onAction(List<IndoorwayObjectParameters> indoorwayObjectParametersList) {
+            public void onAction(IndoorwayMap indoorwayMap) {
                 // handle map objects
             }
         })
