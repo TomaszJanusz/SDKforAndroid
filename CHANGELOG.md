@@ -1,6 +1,6 @@
 # Indoorway Android SDK Changelog
 
-## v1.0.1
+## v1.1.0
 
 - Listeners for map touch events
 - Improved map drawer:
