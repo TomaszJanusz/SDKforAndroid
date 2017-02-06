@@ -18,6 +18,8 @@ Indoorway lets you find your way indoors. Check it out!
     + [Fetching buildings and maps objects](#fetching-buildings-and-maps-objects)
     + [Indoor positioning](#indoor-positioning)
     + [User tracking](#user-tracking)
+    + [Ranges](#ranges)
+    + [Proximity communication](#proximity-communication)
 - [Documentation](#documentation)
 - [Support](#support)
 - [Licence](#licence)
@@ -237,7 +239,7 @@ There are more properties which can be set. Refer to full documentation for comp
 >     .setOnMapLoadCompletedListener(new OnMapLoadedListener() {
 >         @Override
 >         public void onAction(BuildingAndMapId buildingAndMapId) {
->             // LOAD CUSTOM MARKERS HERE
+>             // load custom markers here!
 >         }
 >     });
 > ```
@@ -743,6 +745,22 @@ protected void onResume() {
 ```
 
 > You can add as many ranges as you want. Please note their identifiers need to be unique.
+
+### Proximity communication
+
+Indoorway SDK supports proximity communication. Once defined in dashboard, events can be received on app to display notifications under some circumstances. 
+Currently enter/exit triggers are supported.
+
+```
+serviceConnection
+    .setOnProximityEventListener(new OnProximityEventListener() {
+        @Override
+        public void onEvent(IndoorwayProximityEvent event) {
+            // show notification using event title, description, url etc.
+        }
+    });
+
+```
 
 ## Documentation
 
