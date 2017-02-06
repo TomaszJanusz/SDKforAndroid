@@ -329,7 +329,7 @@ myLayer
 
 Figures can be added using it's coordinates. See an example below:
 
-```
+```java
 Coordinates coordinates = new Coordinates(52.0, 21.0);
 myLayer.add(new DrawableCircle(
     "<unique-figure-id>",             
@@ -751,7 +751,7 @@ protected void onResume() {
 Indoorway SDK supports proximity communication. Once defined in dashboard, events can be received on app to display notifications under some circumstances. 
 Currently enter/exit triggers are supported.
 
-```
+```java
 serviceConnection
     .setOnProximityEventListener(new OnProximityEventListener() {
         @Override
