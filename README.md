@@ -20,6 +20,7 @@ Indoorway lets you find your way indoors. Check it out!
     + [User tracking](#user-tracking)
     + [Ranges](#ranges)
     + [Proximity communication](#proximity-communication)
+    + [Tracking](#tracking)
 - [Documentation](#documentation)
 - [Support](#support)
 - [Licence](#licence)
@@ -755,12 +756,36 @@ Currently enter/exit triggers are supported.
 serviceConnection
     .setOnProximityEventListener(new OnProximityEventListener() {
         @Override
-        public void onEvent(IndoorwayProximityEvent event) {
+        public void onEvent(IndoorwayProximityEvent proximityEvent) {
             // show notification using event title, description, url etc.
         }
     });
 
 ```
+
+> If you want to track open rate / interactions see (tracking section)[#tracking].
+
+### Tracking
+
+In addition to location updates, Indoorway allows event tracking. It can be button, notification clicks or anything. Just use `EventTrackingControl`:
+
+```java
+IndoorwaySdk.getInstance()
+    .getEventTrackingControl()
+    .track("<interaction>", "<label>", "<category>");
+```
+
+`interaction`, `label`, `category` can be set to any value.
+
+To track proximity events conversion add one more parameter:
+
+```java
+IndoorwaySdk.getInstance()
+    .getEventTrackingControl()
+    .track("<interaction>", "<label>", "<category>", proximityEvent.getUuid());
+```
+
+> See [proximity communication](#proximity-communication) section for `proximityEvent` sample.
 
 ## Documentation
 
