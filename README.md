@@ -700,7 +700,7 @@ serviceConnection.setupVisitor(visitor);
 
 ### Ranges
 
-In case you want receive callbacks when user enters or leaves , you can use `OnRangeEnterExitListener`.
+In case you want receive callbacks when user enters or leaves specific region, you can use `OnRangeEnterExitListener`.
 
 ```java
 @Override

@@ -35,7 +35,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
     // IPS library
-    compile('com.indoorway.android:common:1.0.0')
-    compile('com.indoorway.android:map:1.0.0')
-    compile('com.indoorway.android:location:1.0.0')
+    compile('com.indoorway.android:common:1.1.0')
+    compile('com.indoorway.android:map:1.1.0')
+    compile('com.indoorway.android:location:1.1.0')
 }

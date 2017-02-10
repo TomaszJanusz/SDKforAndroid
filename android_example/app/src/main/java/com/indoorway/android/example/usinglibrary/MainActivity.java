@@ -35,9 +35,11 @@ import com.indoorway.android.location.sdk.service.PositioningServiceConnection;
 import com.indoorway.android.map.sdk.IndoorwayMapSdk;
 import com.indoorway.android.map.sdk.listeners.OnMapLoadedListener;
 import com.indoorway.android.map.sdk.listeners.OnObjectSelectedListener;
-import com.indoorway.android.map.sdk.model.BuildingAndMapId;
+import com.indoorway.android.map.sdk.model.IndoorwayMap;
 import com.indoorway.android.map.sdk.view.IndoorwayMapView;
+import com.indoorway.android.map.sdk.view.drawable.figures.DrawableCircle;
 import com.indoorway.android.map.sdk.view.drawable.figures.DrawableText;
+import com.indoorway.android.map.sdk.view.drawable.layers.MarkersLayer;
 
 import java.util.List;
 
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 // optional: assign callback for map loaded event
                 .setOnMapLoadCompletedListener(new OnMapLoadedListener() {
                     @Override
-                    public void onAction(BuildingAndMapId buildingAndMapId) {
+                    public void onAction(IndoorwayMap indoorwayMap) {
                         // called on every new map load success
                         initCustomMarkers();
                     }
@@ -165,15 +167,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void initCustomMarkers() {
-        indoorwayMapView.getMarkerControl()
-                .add(
-                        new DrawableText(
-                                "<label-id>",
-                                new Coordinates(52.10, 21.30), // lat, lon
-                                "Sample label",
-                                2f
-                        )
-                );
+        // create new layer
+        MarkersLayer layer = indoorwayMapView.getMarkerControl().addLayer();
+        // insert multiple objects
+        // ... labels
+        layer.add(
+                new DrawableText(
+                        "<label-id>",   // unique identifier
+                        new Coordinates(52.10, 21.30), // lat, long
+                        "Sample label",
+                        2f              // height
+                )
+        );
+        // ... figures
+        layer.add(
+                new DrawableCircle(
+                        "<figure-id>", // unique identifier
+                        10f,           // radius (in meters)
+                        Color.RED,     // background color
+                        Color.BLUE,    // outline color
+                        0.2f,          // outline width (in meters)
+                        new Coordinates(52.20, 21.40) // lat, long of center point
+                )
+        );
     }
 
     /**
@@ -240,9 +256,9 @@ public class MainActivity extends AppCompatActivity {
         mapSdk.getBuildingsApi()
                 // TODO: insert building and map uuid
                 .getMapObjects("<BUILDING-UUID>", "<MAP-UUID>")
-                .setOnCompletedListener(new GenericListenerArg1<List<IndoorwayObjectParameters>>() {
+                .setOnCompletedListener(new GenericListenerArg1<IndoorwayMap>() {
                     @Override
-                    public void onAction(List<IndoorwayObjectParameters> indoorwayObjectParameterses) {
+                    public void onAction(IndoorwayMap indoorwayMap) {
                         // handle map objects
                     }
                 })
