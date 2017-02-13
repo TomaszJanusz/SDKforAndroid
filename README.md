@@ -758,6 +758,7 @@ serviceConnection
         @Override
         public void onEvent(IndoorwayProximityEvent proximityEvent) {
             // show notification using event title, description, url etc.
+            // track conversion using proximityEvent.getUuid()
         }
     });
 
@@ -769,20 +770,13 @@ serviceConnection
 
 In addition to location updates, Indoorway allows event tracking. It can be button, notification clicks or anything. Just use `EventTrackingControl`:
 
-```java
-IndoorwaySdk.getInstance()
-    .getEventTrackingControl()
-    .track("<interaction>", "<label>", "<category>");
-```
-
-`interaction`, `label`, `category` can be set to any value.
-
-To track proximity events conversion add one more parameter:
+`label`, `category`, `interaction` are optional and can be set to any value.
 
 ```java
+
 IndoorwaySdk.getInstance()
     .getEventTrackingControl()
-    .track("<interaction>", "<label>", "<category>", proximityEvent.getUuid());
+    .track(proximityEvent.getUuid(), "<label>", "<category>", "<interaction>");
 ```
 
 > See [proximity communication](#proximity-communication) section for `proximityEvent` sample.

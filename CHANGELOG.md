@@ -10,4 +10,4 @@
 - Fetching paths for specific map
 - Receive map objects and paths graph on map load callback
 - Ranges callbacks
-- Events for proximity communication
+- Proximity communication events
