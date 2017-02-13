@@ -764,7 +764,7 @@ serviceConnection
 
 ```
 
-> If you want to track open rate / interactions see (tracking section)[#tracking].
+> If you want to track open rate / interactions see [tracking section](#tracking).
 
 ### Tracking
 
